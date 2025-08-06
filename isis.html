@@ -1,0 +1,347 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Para Minha futura muié (Isis) 💖</title>
+  <style>
+    body {
+      margin: 0;
+      font-family: 'Georgia', serif;
+      background-color: #1a1a1a;
+      overflow-x: hidden;
+      color: #f0f0f0;
+    }
+
+    /* Efeito de galeria de arte */
+    body:before {
+      content: "";
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: 
+        linear-gradient(rgba(0,0,0,0.2) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(0,0,0,0.2) 1px, transparent 1px);
+      background-size: 40px 40px;
+      z-index: -2;
+      pointer-events: none;
+    }
+
+    body:after {
+      content: "";
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: radial-gradient(circle at 20% 30%, rgba(50,50,50,0.8) 0%, rgba(0,0,0,0.9) 100%);
+      z-index: -3;
+    }
+
+    .popup {
+      position: fixed;
+      top: 0; left: 0;
+      width: 100%; height: 100%;
+      background-color: rgba(0, 0, 0, 0.8);
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      z-index: 1000;
+    }
+
+    .popup-content {
+      background: #2a2a2a;
+      padding: 30px;
+      border-radius: 12px;
+      text-align: center;
+      box-shadow: 0 4px 20px rgba(0,0,0,0.5);
+      max-width: 90%;
+      border: 1px solid #555;
+    }
+
+    .popup h2 {
+      font-size: 24px;
+      color: #d4af37;
+    }
+
+    .popup button {
+      margin: 10px;
+      padding: 10px 20px;
+      font-size: 18px;
+      border: none;
+      border-radius: 6px;
+      cursor: pointer;
+      transition: all 0.3s ease;
+    }
+
+    #sim {
+      background-color: #d4af37;
+      color: #1a1a1a;
+    }
+
+    #sim:hover {
+      background-color: #f9d423;
+      transform: scale(1.05);
+    }
+
+    #nao {
+      background-color: #555;
+      color: #f0f0f0;
+      position: relative;
+    }
+
+    #nao:hover {
+      background-color: #777;
+    }
+
+    .gallery {
+      padding: 80px 30px;
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+      gap: 60px;
+      position: relative;
+    }
+
+    /* Efeito de luz de galeria */
+    .gallery:before {
+      content: "";
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: radial-gradient(circle at 50% 0%, rgba(255,255,255,0.05) 0%, transparent 30%);
+      pointer-events: none;
+    }
+
+    .frame {
+      position: relative;
+      padding: 25px;
+      background: 
+        linear-gradient(135deg, #8B4513 25%, #A0522D 25%, #A0522D 50%, #8B4513 50%, #8B4513 75%, #A0522D 75%);
+      background-size: 20px 20px;
+      border-radius: 8px;
+      box-shadow:
+        0 0 0 12px #2a2a2a,
+        0 15px 35px rgba(0, 0, 0, 0.6),
+        inset 0 0 30px rgba(0, 0, 0, 0.7);
+      transition: transform 0.5s ease, box-shadow 0.5s ease;
+      transform-style: preserve-3d;
+      z-index: 1;
+    }
+
+    .frame:before {
+      content: '';
+      position: absolute;
+      top: 5px;
+      left: 5px;
+      right: 5px;
+      bottom: 5px;
+      border: 2px solid rgba(210, 180, 140, 0.5);
+      border-radius: 5px;
+      pointer-events: none;
+    }
+
+    .frame:after {
+      content: '';
+      position: absolute;
+      top: 15px;
+      left: 15px;
+      right: 15px;
+      bottom: 15px;
+      border: 1px solid rgba(255, 215, 0, 0.3);
+      border-radius: 2px;
+      pointer-events: none;
+    }
+
+    .frame:hover {
+      transform: scale(1.05) rotateY(5deg);
+      box-shadow:
+        0 0 0 12px #2a2a2a,
+        0 25px 50px rgba(0, 0, 0, 0.8),
+        inset 0 0 40px rgba(0, 0, 0, 0.9);
+    }
+
+    .frame img {
+      width: 100%;
+      height: 300px;
+      object-fit: cover;
+      display: block;
+      border-radius: 2px;
+      background: white;
+      box-shadow: inset 0 0 15px rgba(0, 0, 0, 0.3);
+      border: 1px solid #444;
+    }
+
+    /* Plaquinha de descrição da obra */
+    .frame .art-label {
+      position: absolute;
+      bottom: -40px;
+      left: 0;
+      width: 100%;
+      text-align: center;
+      color: #d4af37;
+      font-size: 14px;
+      font-style: italic;
+      text-shadow: 0 1px 2px rgba(0,0,0,0.8);
+    }
+
+    .poem {
+      text-align: center;
+      padding: 80px 20px;
+      background-color: rgba(30, 30, 30, 0.7);
+      color: #d4af37;
+      border-top: 1px solid #444;
+      border-bottom: 1px solid #444;
+      position: relative;
+      margin: 40px 0;
+    }
+
+    .poem:before {
+      content: "";
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: url('https://www.transparenttextures.com/patterns/concrete-wall.png');
+      opacity: 0.2;
+      z-index: -1;
+    }
+
+    footer {
+      text-align: center;
+      padding: 30px;
+      background: #1a1a1a;
+      color: #d4af37;
+      border-top: 1px solid #444;
+      font-size: 14px;
+    }
+
+    /* Adicionando luzes de galeria */
+    .spotlight {
+      position: fixed;
+      width: 200px;
+      height: 200px;
+      background: radial-gradient(circle, rgba(255,255,255,0.15) 0%, transparent 70%);
+      pointer-events: none;
+      z-index: -1;
+    }
+
+    .spotlight:nth-child(1) {
+      top: 10%;
+      left: 20%;
+    }
+
+    .spotlight:nth-child(2) {
+      top: 30%;
+      right: 15%;
+    }
+
+    .spotlight:nth-child(3) {
+      bottom: 20%;
+      left: 25%;
+    }
+  </style>
+</head>
+<body>
+  <!-- Luzes da galeria -->
+  <div class="spotlight"></div>
+  <div class="spotlight"></div>
+  <div class="spotlight"></div>
+
+  <div class="popup" id="popup">
+    <div class="popup-content">
+      <h2>você aceita ver algo feito com carinho? (duvido tu clicar no não) </h2>
+      <button id="sim">Sim </button>
+      <button id="nao">Não 😢</button>
+    </div>
+  </div>
+
+  <div class="poem" id="conteudo" style="display:none">
+    <h1>Soneto 116 - William Shakespeare</h1>
+    <p>
+      O amor não se turva em horas ou semanas,<br>
+      Mas firma-se eterno ao fim dos tempos.<br>
+      Não é joguete de ventos ou cenas,<br>
+      Mas farol fixo em mares e tormentos.<br>
+    </p>
+  </div>
+
+  <div class="gallery" id="galeria" style="display:none">
+    <div class="frame">
+      <img src="isis 5.jpg" alt="Arte 1">
+      <div class="art-label">"Retrato da Minha Inspiração" - Óleo sobre tela</div>
+    </div>
+    <div class="frame">
+      <img src="isis 2.jpg" alt="Arte 2">
+      <div class="art-label">"Momento Eterno" - Fotografia artística</div>
+    </div>
+    <div class="frame">
+      <img src="isis 3.jpg" alt="Arte 3">
+      <div class="art-label">"Sorriso que Ilumina" - Aquarela</div>
+    </div>
+    <div class="frame">
+      <img src="isis 4.jpg" alt="Arte 4">
+      <div class="art-label">"Beleza em Pausa" - Técnica mista</div>
+    </div>
+    <div class="frame">
+      <img src="isis 6.jpg" alt="Arte 5">
+      <div class="art-label">"Olhar que Encanta" - Carvão e giz</div>
+    </div>
+    <div class="frame">
+      <img src="isis 1.jpg" alt="Arte 6">
+      <div class="art-label">"Harmonia Perfeita" - Óleo sobre linho</div>
+    </div>
+  </div>
+
+  <footer id="rodape" style="display:none">
+    Galeria do Amor - Feito com carinho por alguém que te admira muito 💘
+  </footer>
+
+  <audio autoplay loop>
+    <source src="https://www.bensound.com/bensound-music/bensound-love.mp3" type="audio/mp3" />
+  </audio>
+
+  <script>
+    const popup = document.getElementById('popup');
+    const simBtn = document.getElementById('sim');
+    const naoBtn = document.getElementById('nao');
+    const conteudo = document.getElementById('conteudo');
+    const galeria = document.getElementById('galeria');
+    const rodape = document.getElementById('rodape');
+
+    simBtn.addEventListener('click', () => {
+      popup.style.display = 'none';
+      conteudo.style.display = 'block';
+      galeria.style.display = 'grid';
+      rodape.style.display = 'block';
+      
+      // Efeito de iluminação suave ao entrar na galeria
+      document.body.style.transition = 'background-color 2s ease';
+      document.body.style.backgroundColor = '#1a1a1a';
+    });
+
+    naoBtn.addEventListener('mouseover', () => {
+      const x = Math.floor(Math.random() * (window.innerWidth - naoBtn.offsetWidth));
+      const y = Math.floor(Math.random() * (window.innerHeight - naoBtn.offsetHeight));
+      naoBtn.style.position = 'absolute';
+      naoBtn.style.top = y + 'px';
+      naoBtn.style.left = x + 'px';
+    });
+
+    // Efeito de luz acompanhando o mouse
+    document.addEventListener('mousemove', (e) => {
+      const spotlights = document.querySelectorAll('.spotlight');
+      spotlights.forEach(spotlight => {
+        const x = e.clientX;
+        const y = e.clientY;
+        spotlight.style.transform = `translate(${x - 100}px, ${y - 100}px)`;
+      });
+    });
+  </script>
+
+</body>
+</html>
